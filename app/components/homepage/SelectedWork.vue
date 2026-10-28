@@ -121,7 +121,7 @@ onBeforeUnmount(() => io?.disconnect());
             </h2>
           </div>
 
-          <div class="w-full max-w-[300px]">
+          <div class="w-full max-w-75">
             <p class="mb-3 font-mono text-[10px] tracking-[0.13em] text-label">✧ THE CHRONICLES ✧</p>
             <p class="m-0 text-sm leading-7 text-muted">
               Every project is a new quest. Explore the challenges, the tools, and the worlds built along the way.
