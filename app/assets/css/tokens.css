@@ -1,0 +1,65 @@
+:root {
+  color-scheme: light;
+
+  /* Backgrounds — parchment & ivory */
+  --color-bg: #f8f3e8;
+  --color-surface: #fffdf8;
+  --color-surface-raised: #eee5d5;
+
+  /* Typography — dark ink */
+  --color-text: #382f27;
+  --color-text-muted: #766a59; /* 4.8:1 di atas --color-bg */
+  --color-border: rgb(139 106 53 / 25%);
+
+  /* Medieval accents */
+  --color-accent: #8b6a35;
+  --color-accent-hover: #6f5128;
+  --color-accent-soft: #e8ddc8;
+
+  /* Label kecil (9–11px) — lebih gelap supaya lolos kontras AA */
+  --color-copper: #7a5a2a; /* 5.7:1 */
+  --color-stone-ink: #6b5f4e; /* 5.6:1 */
+
+  /* Royal burgundy */
+  --color-burgundy: #713840;
+  --color-burgundy-hover: #592b32;
+  --color-burgundy-soft: #efe1df;
+
+  /* Optional RPG colors */
+  --color-success: #526b4c;
+  --color-magic: #75628f;
+  --color-danger: #9a4540;
+
+  /* Pixel-art details (hanya dekorasi, bukan teks) */
+  --color-pixel-shadow: #2e261f;
+  --color-gold-highlight: #c5a568;
+
+  /* Scene siang (dipakai heroScene.ts sebagai acuan palet) */
+  --sky-top: #b9d5d0;
+  --sky-bottom: #f8e0b0;
+  --grass: #82a05a;
+  --grass-dark: #4f6a3c;
+  --stone: #b3a283;
+  --roof: #7f3e47;
+
+  /* Fonts — nama peran, bukan nama font, supaya tidak bentrok dengan @theme */
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-body: "Inter Variable", "Inter", Arial, sans-serif;
+  --font-code: "IBM Plex Mono", ui-monospace, monospace;
+  --font-retro: "Press Start 2P", ui-monospace, monospace;
+
+  /* Layout */
+  --container-max: 1440px;
+  --page-gutter: clamp(1.25rem, 5vw, 5rem);
+
+  /* Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 180ms;
+  --duration-normal: 320ms;
+  --duration-slow: 700ms;
+}

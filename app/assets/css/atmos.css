@@ -1,0 +1,277 @@
+
+/* =========================================
+   ATMOS — Temperature Reactive Glassmorphism
+   ========================================= */
+
+.atmos-theme {
+  --atmos-bg: #dceaf5;
+  --atmos-bg-secondary: #edf3f5;
+  --atmos-glow: rgba(255, 255, 255, 0.72);
+  --atmos-tint: rgba(120, 165, 198, 0.24);
+  --atmos-text: #203a4c;
+  --atmos-muted: #587181;
+  --atmos-border: rgba(255, 255, 255, 0.58);
+  --atmos-glass: rgba(255, 255, 255, 0.34);
+  --atmos-glass-strong: rgba(255, 255, 255, 0.52);
+  --atmos-shadow: rgba(41, 66, 82, 0.12);
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  overflow: clip;
+  color: var(--atmos-text);
+background-color: var(--atmos-bg);
+background-image:
+  linear-gradient(
+    180deg,
+    rgba(20, 30, 24, 0.12) 0%,
+    rgba(20, 30, 24, 0.32) 100%
+  ),
+  radial-gradient(
+    ellipse at 15% 5%,
+    var(--atmos-glow),
+    transparent 42%
+  ),
+  radial-gradient(
+    ellipse at 85% 35%,
+    var(--atmos-tint),
+    transparent 48%
+  ),
+  var(--atmos-background-image),
+  linear-gradient(
+    145deg,
+    var(--atmos-bg-secondary),
+    var(--atmos-bg) 55%,
+    var(--atmos-bg-secondary)
+  );
+
+background-position: center, center, center, center, center;
+background-repeat: no-repeat;
+background-size: cover;
+background-attachment: fixed;
+  transition:
+    background-color 1.4s ease,
+    color 1s ease;
+}
+
+/* Background image placeholder.
+   Later, set --atmos-background-image to url('/images/your-image.jpg'). */
+
+.atmos-theme::before {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background-image:
+    var(--atmos-background-image, none);
+  background-size: cover;
+  background-position: center;
+  opacity: var(--atmos-image-opacity, 0);
+  transition: opacity 1.4s ease;
+}
+
+.atmos-theme::after {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(
+      180deg,
+      var(--atmos-overlay, rgba(235, 243, 247, 0.12)),
+      transparent 35%,
+      var(--atmos-overlay, rgba(235, 243, 247, 0.12))
+    );
+}
+
+/* Glass surfaces */
+
+.atmos-theme .atmos-glass {
+  background: var(--atmos-glass);
+  border: 1px solid var(--atmos-border);
+  box-shadow:
+    0 12px 40px var(--atmos-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+}
+
+.atmos-theme .atmos-glass-strong {
+  background: var(--atmos-glass-strong);
+  border: 1px solid var(--atmos-border);
+  box-shadow: 0 16px 48px var(--atmos-shadow);
+  backdrop-filter: blur(30px) saturate(145%);
+  -webkit-backdrop-filter: blur(30px) saturate(145%);
+}
+
+.atmos-theme .atmos-text-muted {
+  color: var(--atmos-muted);
+}
+
+.atmos-theme .atmos-weather-icon {
+  color: var(--atmos-text);
+}
+
+/* Temperature: below 10°C — frozen */
+
+.atmos-theme--frozen {
+  --atmos-background-image: url("/images/atmos/winter.png");
+  --atmos-bg: #c9e0f1;
+  --atmos-bg-secondary: #edf5fa;
+  --atmos-glow: rgba(255, 255, 255, 0.88);
+  --atmos-tint: rgba(116, 174, 213, 0.3);
+  --atmos-text: #25445c;
+  --atmos-muted: #526f83;
+  --atmos-border: rgba(255, 255, 255, 0.72);
+  --atmos-glass: rgba(246, 251, 255, 0.38);
+  --atmos-glass-strong: rgba(246, 251, 255, 0.6);
+  --atmos-shadow: rgba(51, 91, 119, 0.14);
+}
+
+/* Temperature: 10–19.9°C — cold mist */
+
+.atmos-theme--cold {
+  --atmos-background-image: url("/images/atmos/cold.jpeg");
+  --atmos-bg: #d6e2e6;
+  --atmos-bg-secondary: #f0f3f1;
+  --atmos-glow: rgba(255, 255, 255, 0.8);
+  --atmos-tint: rgba(140, 166, 173, 0.3);
+  --atmos-text: #304b53;
+  --atmos-muted: #61777b;
+  --atmos-border: rgba(255, 255, 255, 0.68);
+  --atmos-glass: rgba(250, 252, 251, 0.38);
+  --atmos-glass-strong: rgba(250, 252, 251, 0.58);
+  --atmos-shadow: rgba(53, 79, 82, 0.12);
+}
+
+/* Temperature: 20–24.9°C — mild nature */
+
+.atmos-theme--mild {
+  --atmos-background-image: url("/images/atmos/mild.jpg");
+  --atmos-bg: #dce8d7;
+  --atmos-bg-secondary: #f5f4ec;
+  --atmos-glow: rgba(255, 255, 239, 0.85);
+  --atmos-tint: rgba(125, 160, 111, 0.25);
+  --atmos-text: #294638;
+  --atmos-muted: #647661;
+  --atmos-border: rgba(255, 255, 255, 0.68);
+  --atmos-glass: rgba(250, 252, 244, 0.38);
+  --atmos-glass-strong: rgba(250, 252, 244, 0.6);
+  --atmos-shadow: rgba(56, 84, 56, 0.12);
+}
+
+/* Temperature: 25–29.9°C — golden hour */
+
+.atmos-theme--warm {
+  --atmos-background-image: url("/images/atmos/warm.avif");
+  --atmos-bg: #f1e3c9;
+  --atmos-bg-secondary: #faf2e2;
+  --atmos-glow: rgba(255, 250, 220, 0.88);
+  --atmos-tint: rgba(226, 174, 103, 0.3);
+  --atmos-text: #60452f;
+  --atmos-muted: #886b4d;
+  --atmos-border: rgba(255, 255, 255, 0.68);
+  --atmos-glass: rgba(255, 249, 235, 0.4);
+  --atmos-glass-strong: rgba(255, 249, 235, 0.62);
+  --atmos-shadow: rgba(116, 80, 42, 0.12);
+}
+
+/* Temperature: 30–34.9°C — hot */
+
+.atmos-theme--hot {
+  --atmos-background-image: url("/images/atmos/hot.jpg");
+  --atmos-bg: #f1d5bd;
+  --atmos-bg-secondary: #fae9d7;
+  --atmos-glow: rgba(255, 238, 207, 0.9);
+  --atmos-tint: rgba(227, 131, 83, 0.28);
+  --atmos-text: #633e2f;
+  --atmos-muted: #90644d;
+  --atmos-border: rgba(255, 255, 255, 0.65);
+  --atmos-glass: rgba(255, 245, 232, 0.4);
+  --atmos-glass-strong: rgba(255, 245, 232, 0.62);
+  --atmos-shadow: rgba(133, 72, 43, 0.14);
+}
+
+/* Temperature: 35°C and above — extreme heat */
+
+.atmos-theme--extreme {
+  --atmos-bg: #e9c2a7;
+  --atmos-bg-secondary: #f8e0c8;
+  --atmos-glow: rgba(255, 228, 184, 0.9);
+  --atmos-tint: rgba(196, 92, 58, 0.32);
+  --atmos-text: #5d3328;
+  --atmos-muted: #885747;
+  --atmos-border: rgba(255, 255, 255, 0.62);
+  --atmos-glass: rgba(255, 241, 225, 0.4);
+  --atmos-glass-strong: rgba(255, 241, 225, 0.62);
+  --atmos-shadow: rgba(127, 58, 39, 0.16);
+}
+
+/* Weather overlays */
+
+.atmos-weather--rain {
+  --atmos-glow: rgba(220, 232, 240, 0.66);
+  --atmos-tint: rgba(91, 132, 158, 0.32);
+}
+
+.atmos-weather--cloudy {
+  --atmos-glow: rgba(255, 255, 255, 0.68);
+  --atmos-tint: rgba(146, 157, 158, 0.26);
+}
+
+.atmos-weather--clear {
+  --atmos-glow: rgba(255, 245, 210, 0.9);
+}
+
+/* Decorative atmospheric layers */
+
+.atmos-theme .atmos-ambient {
+  position: absolute;
+  z-index: -1;
+  top: -12rem;
+  right: -10rem;
+  width: min(65vw, 48rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    var(--atmos-glow),
+    transparent 68%
+  );
+  filter: blur(22px);
+  pointer-events: none;
+  animation: atmos-drift 18s ease-in-out infinite alternate;
+}
+
+.atmos-theme .atmos-ambient--secondary {
+  top: 30%;
+  right: auto;
+  left: -18rem;
+  width: min(55vw, 40rem);
+  background: radial-gradient(
+    circle,
+    var(--atmos-tint),
+    transparent 70%
+  );
+  animation-delay: -8s;
+}
+
+@keyframes atmos-drift {
+  from {
+    transform: translate3d(-2%, 0, 0) scale(0.96);
+  }
+  to {
+    transform: translate3d(3%, 5%, 0) scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .atmos-theme,
+  .atmos-theme::before,
+  .atmos-theme .atmos-ambient {
+    animation: none !important;
+    transition: none !important;
+  }
+}

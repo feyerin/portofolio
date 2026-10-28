@@ -1,0 +1,78 @@
+@import "tailwindcss";
+@import "./tokens.css";
+@import "./motion.css";
+
+/*
+  Tailwind memakai nama BERBEDA dari token di tokens.css.
+  (Sebelumnya `--color-surface: var(--color-surface)` merujuk ke dirinya sendiri
+  sehingga tidak valid.) `inline` = utilitas membaca nilai token langsung.
+  Contoh: bg-paper, text-ink, border-line, text-wine, font-display.
+*/
+@theme inline {
+  --color-background: var(--color-bg);
+  --color-paper: var(--color-surface);
+  --color-paper-raised: var(--color-surface-raised);
+  --color-ink: var(--color-text);
+  --color-muted: var(--color-text-muted);
+  --color-line: var(--color-border);
+
+  --color-gold: var(--color-accent);
+  --color-gold-hover: var(--color-accent-hover);
+  --color-gold-soft: var(--color-accent-soft);
+  --color-wine: var(--color-burgundy);
+  --color-wine-hover: var(--color-burgundy-hover);
+  --color-wine-soft: var(--color-burgundy-soft);
+  --color-label: var(--color-copper);
+  --color-label-muted: var(--color-stone-ink);
+  --color-shadow: var(--color-pixel-shadow);
+  --color-highlight: var(--color-gold-highlight);
+
+  --font-display: var(--font-heading);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-code);
+  --font-pixel: var(--font-retro);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 4px;
+}

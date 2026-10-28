@@ -1,0 +1,375 @@
+.about-section {
+  --ink: #493927;
+  --gold: #94713a;
+  --burgundy: #783f46;
+}
+
+.about-decoration {
+  position: absolute;
+  color: var(--gold);
+  opacity: 0.15;
+  font-size: 38px;
+  line-height: 1;
+  user-select: none;
+  animation: ornament-float 7s ease-in-out infinite;
+}
+
+.about-sword {
+  left: 2%;
+  top: 12%;
+  transform: rotate(-20deg);
+}
+
+.about-rune {
+  right: 4%;
+  top: 24%;
+  font-size: 54px;
+  animation-delay: 800ms;
+}
+
+.about-shield {
+  right: 2%;
+  bottom: 18%;
+  font-size: 64px;
+  animation-delay: 1.4s;
+}
+
+.about-sparkle {
+  left: 42%;
+  top: 43%;
+  font-size: 24px;
+  animation: pixel-twinkle 3s steps(2, end) infinite;
+}
+
+.about-potion {
+  left: 3%;
+  bottom: 8%;
+  font-size: 38px;
+  animation-delay: 1s;
+}
+
+/* Portrait frame */
+.portrait-frame {
+  animation: profile-enter 700ms ease-out both;
+}
+
+.portrait-stage img {
+  z-index: 2;
+}
+
+.portrait-placeholder {
+  z-index: 1;
+  background-image:
+    linear-gradient(45deg, rgb(148 113 58 / 8%) 25%, transparent 25%),
+    linear-gradient(-45deg, rgb(148 113 58 / 8%) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgb(148 113 58 / 8%) 75%),
+    linear-gradient(-45deg, transparent 75%, rgb(148 113 58 / 8%) 75%);
+  background-size: 16px 16px;
+  background-position:
+    0 0,
+    0 8px,
+    8px -8px,
+    -8px 0;
+}
+
+.portrait-silhouette {
+  image-rendering: pixelated;
+  filter: drop-shadow(4px 4px 0 rgb(73 57 39 / 12%));
+}
+
+.portrait-corner,
+.portrait-outer-corner {
+  position: absolute;
+  z-index: 5;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #94713a;
+  background: #f4eddf;
+}
+
+.portrait-corner {
+  width: 8px;
+  height: 8px;
+}
+
+.portrait-outer-corner {
+  width: 12px;
+  height: 12px;
+}
+
+/* World map */
+.world-map-frame {
+  animation: map-enter 800ms ease-out both;
+}
+
+.world-map-canvas {
+  overflow: hidden;
+  background-color: #c9d1b7;
+  background-image:
+    linear-gradient(90deg, rgb(73 57 39 / 5%) 1px, transparent 1px),
+    linear-gradient(rgb(73 57 39 / 5%) 1px, transparent 1px);
+  background-size: 16px 16px;
+  isolation: isolate;
+}
+
+.map-ocean-grid {
+  background-image:
+    linear-gradient(90deg, rgb(79 116 118 / 12%) 1px, transparent 1px),
+    linear-gradient(rgb(79 116 118 / 12%) 1px, transparent 1px);
+  background-size: 16px 16px;
+  opacity: 0.7;
+}
+
+.map-coordinate {
+  position: absolute;
+  z-index: 2;
+  color: #493927;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.map-coordinate-one {
+  left: 4%;
+  top: 9%;
+}
+
+.map-coordinate-two {
+  right: 5%;
+  bottom: 17%;
+}
+
+.map-coordinate-three {
+  left: 49%;
+  top: 68%;
+  transform: rotate(-12deg);
+  opacity: 0.35;
+}
+
+.map-label {
+  position: absolute;
+  z-index: 12;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 6px;
+  border: 1px solid rgb(73 57 39 / 45%);
+  background: rgb(244 237 223 / 88%);
+  color: #493927;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: clamp(6px, 0.8vw, 8px);
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.map-label-dot {
+  width: 5px;
+  height: 5px;
+  flex-shrink: 0;
+  background: #783f46;
+  box-shadow: 2px 2px 0 rgb(73 57 39 / 30%);
+}
+
+.map-label-shire {
+  left: 12%;
+  top: 39%;
+}
+
+.map-label-codehaven {
+  left: 29%;
+  top: 30%;
+}
+
+.map-label-peaks {
+  left: 44%;
+  top: 42%;
+}
+
+.map-spark {
+  position: absolute;
+  z-index: 15;
+  color: #783f46;
+  font-size: 13px;
+  pointer-events: none;
+  animation: pixel-twinkle 2.5s steps(2, end) infinite;
+}
+
+.map-spark-one {
+  left: 24%;
+  top: 25%;
+}
+
+.map-spark-two {
+  right: 23%;
+  top: 39%;
+  animation-delay: 600ms;
+}
+
+.map-spark-three {
+  right: 13%;
+  bottom: 26%;
+  animation-delay: 1.2s;
+}
+
+.map-route {
+  animation: route-dash 18s linear infinite;
+}
+
+.map-road {
+  animation: route-dash 24s linear infinite reverse;
+}
+
+.map-marker {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: marker-pulse 2.5s steps(2, end) infinite;
+}
+
+.marker-two {
+  animation-delay: 300ms;
+}
+
+.marker-three {
+  animation-delay: 600ms;
+}
+
+.marker-four {
+  animation-delay: 900ms;
+}
+
+/* Principle list */
+.principle-row {
+  transition: background-color 250ms ease;
+}
+
+.principle-row:hover {
+  background-color: rgb(238 227 207 / 55%);
+}
+
+@keyframes ornament-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -9px;
+  }
+}
+
+@keyframes pixel-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+  }
+
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes route-dash {
+  to {
+    stroke-dashoffset: -96;
+  }
+}
+
+@keyframes marker-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes profile-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes map-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .about-sword {
+    left: -12px;
+  }
+
+  .about-rune {
+    right: -10px;
+    font-size: 38px;
+  }
+
+  .about-shield {
+    right: -14px;
+    font-size: 46px;
+  }
+
+  .map-label {
+    padding: 3px 4px;
+    font-size: 6px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-decoration,
+  .map-spark,
+  .map-route,
+  .map-road,
+  .map-marker,
+  .portrait-frame,
+  .world-map-frame {
+    animation: none;
+  }
+
+  .principle-row,
+  .principle-row h4 {
+    transition: none;
+  }
+}
+
+
+/* Personal interests */
+.interest-card {
+  padding: 1rem;
+  border: 1px solid rgb(161 132 78 / 28%);
+  background: rgb(251 248 241 / 45%);
+  transition: background-color 250ms ease, transform 250ms ease;
+}
+
+.interest-card:hover {
+  background: rgb(238 227 207 / 75%);
+  transform: translateY(-3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interest-card {
+    transition: none;
+  }
+
+  .interest-card:hover {
+    transform: none;
+  }
+}
