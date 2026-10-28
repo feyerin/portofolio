@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref } from "vue";
 import AppContainer from "~/components/layout/AppContainer.vue";
-import { renderHeroScene, SCENE_W, SPOTS } from "~/assets/pixelart/heroscene";
+import { renderHeroScene, SCENE_W, SPOTS } from "~/assets/pixelart/heroScene";
 
 /* ───────── Konten ───────── */
 

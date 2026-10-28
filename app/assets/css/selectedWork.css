@@ -1,0 +1,385 @@
+/* ==========================================================================
+   SelectedWork.css — "Quest Board"
+   Layout memakai Tailwind di template. Sprite (--ic-*, --tile-*) digambar
+   oleh questArt.ts. Semua animasi stepped supaya terasa retro.
+   ========================================================================== */
+
+.quest-section {
+  --parchment-ink: var(--color-text);
+}
+
+.work-bg {
+  background-color: color-mix(in srgb, var(--color-surface-raised) 45%, var(--color-bg));
+}
+
+.work-parchment {
+  background-image:
+    radial-gradient(ellipse at 15% 20%, #d8c79f 0%, transparent 42%),
+    radial-gradient(ellipse at 85% 70%, #e3d2b2 0%, transparent 40%),
+    linear-gradient(90deg, transparent 49.8%, #c6b28b 50%, transparent 50.2%);
+}
+
+.work-grid {
+  background-image:
+    linear-gradient(var(--color-accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-accent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+}
+
+/* ───────── Muncul saat di-scroll ───────── */
+
+.is-armed [data-reveal]:not(.is-in) {
+  opacity: 0;
+}
+
+.is-armed [data-reveal].is-in {
+  animation: quest-enter 0.7s steps(7) var(--quest-delay, 0ms) both;
+}
+
+/* ───────── Ikon sprite (satu sumber untuk dekorasi & lencana) ───────── */
+
+[data-icon] {
+  --k: 4; /* 1 pixel sprite = --k px layar (bilangan bulat -> tajam) */
+  width: calc(var(--cols) * var(--k) * 1px);
+  height: calc(var(--rows) * var(--k) * 1px);
+  background: var(--ic) center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+}
+
+[data-icon="potion"] { --ic: var(--ic-potion); --cols: 11; --rows: 14; }
+[data-icon="staff"] { --ic: var(--ic-staff); --cols: 9; --rows: 16; }
+[data-icon="sword"] { --ic: var(--ic-sword); --cols: 9; --rows: 16; }
+[data-icon="shield"] { --ic: var(--ic-shield); --cols: 11; --rows: 13; }
+[data-icon="crystal"] { --ic: var(--ic-crystal); --cols: 9; --rows: 12; }
+[data-icon="coin"] { --ic: var(--ic-coin); --cols: 9; --rows: 9; }
+[data-icon="map"] { --ic: var(--ic-map); --cols: 13; --rows: 11; }
+[data-icon="dragon"] { --ic: var(--ic-dragon); --cols: 26; --rows: 17; }
+
+/* ───────── Dekorasi latar ───────── */
+
+.deco {
+  position: absolute;
+  display: block;
+  opacity: 0.3;
+  animation: deco-float 6s steps(6) infinite;
+}
+
+.deco-potion { left: 3%; top: 12%; }
+.deco-staff { right: 5%; top: 8%; animation-duration: 7s; animation-direction: reverse; }
+.deco-dragon { --k: 6; right: -14px; top: 31%; opacity: 0.14; animation: dragon-drift 12s steps(8) infinite; }
+.deco-sword { left: 7%; top: 52%; animation-duration: 5s; }
+.deco-shield { right: 8%; top: 61%; animation-duration: 6.5s; animation-direction: reverse; }
+.deco-crystal { left: 43%; top: 7%; opacity: 0.26; animation: crystal-glow 3s steps(2, end) infinite; }
+.deco-coin { left: 45%; bottom: 12%; animation: coin-bob 4s steps(4) infinite; }
+.deco-potion-two { --k: 3; right: 22%; bottom: 6%; opacity: 0.2; animation-duration: 5.5s; animation-direction: reverse; }
+.deco-dragon-two { left: -25px; bottom: 20%; opacity: 0.12; transform: scaleX(-1); animation: dragon-drift 15s steps(8) infinite reverse; }
+.deco-crystal-two { --k: 3; right: 36%; bottom: 4%; opacity: 0.24; animation: crystal-glow 4s steps(2, end) infinite; }
+
+.pixel-particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: var(--color-accent);
+  opacity: 0.55;
+  animation: particle-twinkle 3s steps(2, end) infinite;
+}
+
+.particle-one { left: 22%; top: 24%; }
+.particle-two { right: 23%; top: 44%; animation-delay: 700ms; }
+.particle-three { left: 33%; bottom: 23%; animation-delay: 1.2s; }
+.particle-four { right: 12%; bottom: 13%; animation-delay: 1.8s; }
+
+.rune-divider {
+  position: absolute;
+  color: var(--color-accent);
+  font-family: var(--font-code);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  opacity: 0.28;
+  white-space: nowrap;
+}
+
+.rune-one { left: 3%; top: 42%; }
+.rune-two { right: 3%; bottom: 34%; }
+
+/* ───────── Progres quest (bar bersegmen) ───────── */
+
+.qxp {
+  height: 8px;
+  background: var(--color-accent-soft);
+  box-shadow: 0 0 0 1px rgb(139 106 53 / 45%);
+}
+
+.qxp__fill {
+  display: block;
+  width: 100%; /* tanpa JS: langsung penuh */
+  height: 100%;
+  background: repeating-linear-gradient(90deg, var(--color-burgundy) 0 6px, transparent 6px 8px);
+}
+
+.is-armed .qxp__fill {
+  width: 0;
+}
+
+.is-armed .is-in .qxp__fill {
+  animation: qxp-fill 1.2s steps(12) 0.3s both;
+}
+
+/* ───────── Kartu quest ───────── */
+
+.card-frame {
+  box-shadow: 5px 5px 0 var(--color-gold-highlight);
+  transition:
+    transform 0.2s steps(3),
+    box-shadow 0.2s steps(3);
+}
+
+.quest-card:hover .card-frame {
+  transform: translateY(-4px);
+  box-shadow: 8px 8px 0 var(--color-gold-highlight);
+}
+
+/* paku pin di atas kartu */
+.pin {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  z-index: 5;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  background: var(--color-burgundy);
+  box-shadow:
+    inset 3px 3px 0 #a85860,
+    0 0 0 2px var(--color-pixel-shadow),
+    3px 3px 0 2px rgb(46 38 31 / 22%);
+}
+
+.skill {
+  transition:
+    border-color 0.2s steps(2),
+    color 0.2s steps(2);
+}
+
+.quest-card:hover .skill {
+  border-color: rgb(113 56 64 / 55%);
+  color: var(--color-burgundy);
+}
+
+/* ───────── Artwork per proyek ───────── */
+
+.scene {
+  background-color: #626b4b;
+  background-image: linear-gradient(90deg, rgb(255 255 255 / 4%) 1px, transparent 1px);
+  background-size: 8px 8px, 100% 100%; /* layer 1 = garis grid, layer 2 = gradasi langit */
+}
+
+.scene--sea {
+  --tile: var(--tile-sea);
+  background-color: #1551c3;
+  background-image:
+    linear-gradient(90deg, rgb(255 255 255 / 4%) 1px, transparent 1px),
+    linear-gradient(to bottom, #7d8da8 0%, #4775c5 42%, #1551c3 100%);
+}
+
+.scene--hills {
+  --tile: var(--tile-hills);
+  background-color: #6b5749;
+  background-image:
+    linear-gradient(90deg, rgb(255 255 255 / 4%) 1px, transparent 1px),
+    linear-gradient(to bottom, #b8a08a 0%, #856d5c 42%, #473b34 100%);
+}
+
+.scene--pines {
+  --tile: var(--tile-pines);
+  background-color: #476654;
+  background-image:
+    linear-gradient(90deg, rgb(255 255 255 / 4%) 1px, transparent 1px),
+    linear-gradient(to bottom, #9daf91 0%, #66866e 42%, #395646 100%);
+}
+
+/* garis pemandangan pixel art di dasar panel (tile 32x12, diskalakan x4) */
+.scene-tile {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 48px;
+  background: var(--tile) repeat-x left bottom / 128px 48px;
+  image-rendering: pixelated;
+}
+
+.scene-pixels {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.scene-pixel {
+  position: absolute;
+  display: block;
+  width: 32px;
+  height: 32px;
+  background: #f3dfaa;
+  opacity: 0.25;
+}
+
+.scene-pixel-a { top: 22%; left: 12%; width: 24px; height: 8px; box-shadow: 8px -8px 0 #f3dfaa; }
+.scene-pixel-b { right: 12%; top: 36%; width: 8px; height: 32px; box-shadow: 8px -8px 0 #f3dfaa, 16px 0 0 #f3dfaa; }
+.scene-pixel-c { left: 22%; bottom: 16%; width: 48px; height: 8px; background: #493927; opacity: 0.2; }
+.scene-pixel-d { right: 28%; bottom: 20%; width: 8px; height: 8px; background: #493927; box-shadow: 8px -8px 0 #493927, 16px 0 0 #493927; opacity: 0.3; }
+.scene-pixel-e { left: 54%; top: 15%; width: 8px; height: 8px; }
+.scene-pixel-f { left: 6%; bottom: 30%; width: 8px; height: 8px; box-shadow: 8px 8px 0 #f3dfaa; }
+
+.badge {
+  transition: transform 0.3s steps(3);
+}
+
+.badge__icon {
+  --k: 3;
+  display: block;
+  filter: drop-shadow(2px 2px 0 rgb(46 38 31 / 35%));
+}
+
+.quest-card:hover .badge {
+  transform: translateY(-3px);
+}
+
+/* screenshot dalam bingkai ala lukisan */
+.shot {
+  position: relative;
+  padding: 4px;
+  border: 2px solid rgb(211 184 117 / 70%);
+  background: var(--color-pixel-shadow);
+  box-shadow: 5px 5px 0 rgb(0 0 0 / 22%);
+  transition: transform 0.25s steps(3);
+}
+
+.quest-card:hover .shot {
+  transform: translateY(-4px);
+}
+
+/* scanline retro yang hilang saat di-hover */
+.shot__scan {
+  position: absolute;
+  inset: 4px;
+  background: repeating-linear-gradient(0deg, rgb(0 0 0 / 16%) 0 2px, transparent 2px 4px);
+  pointer-events: none;
+  transition: opacity 0.3s steps(3);
+}
+
+.quest-card:hover .shot__scan {
+  opacity: 0;
+}
+
+/* stempel "QUEST CLEARED" menghantam saat kartu muncul */
+.stamp {
+  position: absolute;
+  right: -6px;
+  bottom: -10px;
+  z-index: 3;
+  padding: 4px 8px;
+  border: 2px solid var(--color-burgundy);
+  background: rgb(255 253 248 / 94%);
+  color: var(--color-burgundy);
+  font-family: var(--font-code);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  transform: rotate(-6deg);
+}
+
+.is-armed .stamp {
+  opacity: 0;
+}
+
+.is-armed .is-in .stamp {
+  animation: stamp-in 0.4s steps(4) calc(var(--quest-delay, 0ms) + 800ms) both;
+}
+
+/* sudut pixel pada bingkai */
+.pixel-corner {
+  position: absolute;
+  z-index: 2;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--color-accent);
+  background: var(--color-bg);
+}
+
+.pixel-corner-tl { left: -2px; top: -2px; }
+.pixel-corner-tr { right: -2px; top: -2px; }
+.pixel-corner-bl { bottom: -2px; left: -2px; }
+.pixel-corner-br { bottom: -2px; right: -2px; }
+
+/* ───────── Animasi ───────── */
+
+@keyframes quest-enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes deco-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+
+@keyframes dragon-drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: -12px -6px; }
+}
+
+@keyframes coin-bob {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -8px; }
+}
+
+@keyframes crystal-glow {
+  0%, 100% { opacity: 0.12; }
+  50% { opacity: 0.32; }
+}
+
+@keyframes particle-twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes qxp-fill {
+  to { width: 100%; }
+}
+
+@keyframes stamp-in {
+  0% { opacity: 0; transform: rotate(-6deg) scale(2.2); }
+  60% { opacity: 1; transform: rotate(-6deg) scale(0.92); }
+  100% { opacity: 1; transform: rotate(-6deg) scale(1); }
+}
+
+/* ───────── Responsif ───────── */
+
+@media (max-width: 640px) {
+  .deco { --k: 3; }
+  .deco-dragon { --k: 4; right: -36px; }
+  .deco-dragon-two { --k: 3; left: -40px; }
+  .deco-staff { right: 2%; }
+  .deco-shield { right: 2%; }
+  .deco-potion { left: 1%; }
+  .deco-sword { left: 2%; }
+  .rune-divider { font-size: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deco,
+  .pixel-particle,
+  .qxp__fill,
+  .stamp,
+  [data-reveal] {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .quest-card:hover .card-frame,
+  .quest-card:hover .shot,
+  .quest-card:hover .badge { transform: none; }
+}
