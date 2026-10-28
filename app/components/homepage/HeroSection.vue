@@ -547,4 +547,4 @@ onBeforeUnmount(() => {
   </section>
 </template>
 
-<style scoped src="~/assets/css/HeroSection.css"></style>
+<style scoped src="~/assets/css/heroSection.css"></style>

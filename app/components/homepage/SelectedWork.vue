@@ -285,4 +285,4 @@ onBeforeUnmount(() => io?.disconnect());
   </section>
 </template>
 
-<style scoped src="~/assets/css/SelectedWork.css"></style>
+<style scoped src="~/assets/css/selectedWork.css"></style>
