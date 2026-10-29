@@ -6,7 +6,7 @@ import { renderHeroScene, SCENE_W, SPOTS } from "~/assets/pixelart/heroScene";
 /* ───────── Konten ───────── */
 
 const roles = ["FRONTEND MAGE", "UI ALCHEMIST", "BUG SLAYER"];
-const technologies = ["React", "Next.js", "Vue", "Nuxt", "TypeScript"];
+const technologies = ["React", "Next.js", "Vue", "Nuxt"];
 
 const stats = [
   { to: 6, suffix: "+", pad: 2, label: "YEARS EXP", xp: 60 },
@@ -201,7 +201,7 @@ onBeforeUnmount(() => {
 <template>
   <section
     id="top"
-    class="relative isolate overflow-hidden bg-background text-ink"
+    class="relative isolate overflow-hidden text-ink"
     aria-labelledby="hero-title"
   >
     <!-- Background grid -->

@@ -1,0 +1,265 @@
+/* ==========================================================================
+   ExperienceSection.css — Guild Records
+   Layout memakai Tailwind di template. Sprite (--ex-*) digambar oleh
+   experienceArt.ts. Semua animasi stepped supaya terasa retro.
+   ========================================================================== */
+
+.exp-section {
+  background-color: var(--color-bg); /* sama dengan section lain: tidak ada garis pertemuan */
+}
+
+.exp-parchment {
+  background-image:
+    radial-gradient(ellipse at 12% 35%, #d8c79f 0%, transparent 45%),
+    radial-gradient(ellipse at 90% 75%, #e3d2b2 0%, transparent 42%);
+  /* memudar di atas & bawah supaya tidak bertabrakan dengan section lain */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+
+.exp-grid {
+  background-image:
+    linear-gradient(var(--color-accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-accent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  /* memudar di atas & bawah supaya tidak bertabrakan dengan section lain */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+
+/* ───────── Muncul saat di-scroll ───────── */
+
+.is-armed [data-reveal]:not([data-in]) {
+  opacity: 0;
+}
+
+.is-armed [data-reveal][data-in] {
+  animation: exp-enter 0.65s steps(6) both;
+}
+
+/* ───────── Sprite ───────── */
+
+[data-icon] {
+  --k: 4; /* 1 pixel sprite = --k px layar (bilangan bulat -> tajam) */
+  display: block;
+  flex-shrink: 0;
+  width: calc(var(--cols) * var(--k) * 1px);
+  height: calc(var(--rows) * var(--k) * 1px);
+  background: var(--ic) center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+}
+
+[data-icon="crest"] { --ic: var(--ex-crest); --cols: 23; --rows: 25; }
+[data-icon="pin"] { --ic: var(--ex-pin); --cols: 7; --rows: 8; }
+[data-icon="gem"] { --ic: var(--ex-gem); --cols: 9; --rows: 9; }
+[data-icon="gemRed"] { --ic: var(--ex-gemRed); --cols: 9; --rows: 9; }
+
+/* api obor: sprite sheet 4 frame (7x9 per frame) */
+[data-icon="flame"] {
+  --ic: var(--ex-flame);
+  --cols: 7;
+  --rows: 9;
+  background-size: calc(28 * var(--k) * 1px) 100%;
+  background-position: 0 0;
+  animation: exp-flame 0.56s steps(4) infinite;
+}
+
+.crest__img {
+  animation: exp-float 5s steps(5) infinite;
+}
+
+/* ───────── Timeline ───────── */
+
+.timeline__track {
+  position: absolute;
+  top: var(--track-top, 0);
+  left: 13px;
+  width: 4px;
+  height: var(--track-h, 0);
+  background: repeating-linear-gradient(180deg, rgb(139 106 53 / 40%) 0 6px, transparent 6px 12px);
+}
+
+/* jalur yang sudah dilewati */
+.timeline__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--fill-h, 0);
+  background: repeating-linear-gradient(180deg, var(--color-burgundy) 0 6px, transparent 6px 12px);
+}
+
+.timeline__flame {
+  --k: 2;
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--fill-h, 0px) - 18px);
+  left: -5px;
+}
+
+.entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 14px;
+  padding-top: 24px;
+}
+
+.entry__marker {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  justify-self: center;
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-surface);
+  box-shadow: 2px 2px 0 rgb(139 106 53 / 25%);
+  color: var(--color-copper);
+  transition:
+    background-color 0.2s steps(2),
+    border-color 0.2s steps(2);
+}
+
+.entry.is-reached .entry__marker {
+  border-color: var(--color-burgundy);
+  background: var(--color-accent-soft);
+  color: var(--color-burgundy);
+}
+
+.entry--current .entry__marker {
+  background: var(--color-burgundy-soft);
+}
+
+.entry__gem {
+  --k: 2;
+  animation: exp-pulse 2.4s steps(2, end) infinite;
+}
+
+.entry__dot {
+  width: 8px;
+  height: 8px;
+  background: var(--color-burgundy);
+  animation: exp-pulse 2.4s steps(2, end) infinite;
+}
+
+/* ───────── Kartu record ───────── */
+
+.entry__card {
+  position: relative;
+  min-width: 0;
+  padding: 22px;
+  border: 2px solid var(--color-pixel-shadow);
+  background: rgb(255 253 248 / 92%);
+  box-shadow: 4px 4px 0 var(--color-gold-highlight);
+  transition:
+    transform 0.2s steps(3),
+    box-shadow 0.2s steps(3),
+    border-color 0.2s steps(3);
+}
+
+.entry:hover .entry__card {
+  box-shadow: 7px 7px 0 var(--color-gold-highlight);
+  transform: translateY(-3px);
+}
+
+.entry--current .entry__card {
+  background: #fffaf0;
+  box-shadow: 5px 5px 0 var(--color-burgundy);
+}
+
+.entry--current:hover .entry__card {
+  box-shadow: 8px 8px 0 var(--color-burgundy);
+}
+
+.entry__divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0 12px;
+  color: var(--color-copper);
+  font-family: var(--font-code);
+  font-size: 10px;
+  letter-spacing: 0.13em;
+}
+
+.entry__divider::after {
+  flex: 1;
+  height: 0;
+  border-top: 2px dashed rgb(139 106 53 / 40%);
+  content: "";
+}
+
+.card-corner {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--color-accent);
+  background: var(--color-bg);
+}
+
+.card-corner-tl { top: -5px; left: -5px; }
+.card-corner-br { right: -5px; bottom: -5px; }
+
+/* ───────── Animasi ───────── */
+
+@keyframes exp-enter {
+  from { opacity: 0; transform: translateY(14px); }
+}
+
+@keyframes exp-flame {
+  to { background-position-x: calc(-28 * var(--k) * 1px); }
+}
+
+@keyframes exp-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -4px; }
+}
+
+@keyframes exp-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+/* ───────── Responsif & aksesibilitas ───────── */
+
+@media (max-width: 560px) {
+  .entry {
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 9px;
+    padding-top: 18px;
+  }
+
+  .entry__marker {
+    width: 22px;
+    height: 22px;
+  }
+
+  .timeline__track {
+    left: 9px;
+  }
+
+  .entry__card {
+    padding: 17px 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crest__img,
+  .entry__gem,
+  .entry__dot,
+  [data-icon="flame"],
+  [data-reveal] {
+    animation: none !important;
+  }
+
+  .entry__card,
+  .entry__marker {
+    transition: none !important;
+  }
+
+  .entry:hover .entry__card {
+    transform: none;
+  }
+}

@@ -5,8 +5,8 @@ import AppContainer from "~/components/layout/AppContainer.vue";
 
 // Ganti dengan informasi profesional kamu.
 const email = "";
-const linkedInUrl = "";
-const githubUrl = "";
+const linkedInUrl = "https://www.linkedin.com/in/aditia-nugraha-postman";
+const githubUrl = "https://github.com/feyerin";
 
 const copied = ref(false);
 

@@ -1,56 +1,83 @@
-.about-section {
-  --ink: #493927;
-  --gold: #94713a;
-  --burgundy: #783f46;
+/* ==========================================================================
+   about.css — Character Profile
+   Layout memakai Tailwind di template. Sprite (--ab-*) digambar oleh
+   aboutArt.ts. Animasi dibuat stepped supaya terasa retro.
+   ========================================================================== */
+
+.about-bg {
+  background-color: var(--color-bg); /* sama dengan section lain: tidak ada garis pertemuan */
 }
 
-.about-decoration {
+.about-parchment {
+  background-image:
+    radial-gradient(ellipse at 15% 25%, #d8c79f 0%, transparent 45%),
+    radial-gradient(ellipse at 90% 70%, #e3d2b2 0%, transparent 42%);
+  /* memudar di atas & bawah supaya tidak bertabrakan dengan section lain */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+
+.about-grid {
+  background-image:
+    linear-gradient(var(--color-accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-accent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  /* memudar di atas & bawah supaya tidak bertabrakan dengan section lain */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+
+/* ───────── Muncul saat di-scroll ───────── */
+
+.is-armed [data-reveal]:not(.is-in) {
+  opacity: 0;
+}
+
+.is-armed [data-reveal].is-in {
+  animation: about-enter 0.7s steps(7) both;
+}
+
+/* ───────── Sprite (satu sumber untuk semua ikon) ───────── */
+
+[data-icon] {
+  --k: 4; /* 1 pixel sprite = --k px layar */
+  display: block;
+  flex-shrink: 0;
+  width: calc(var(--cols) * var(--k) * 1px);
+  height: calc(var(--rows) * var(--k) * 1px);
+  background: var(--ic) center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+}
+
+[data-icon="loupe"] { --ic: var(--ab-loupe); --cols: 11; --rows: 11; }
+[data-icon="hammer"] { --ic: var(--ab-hammer); --cols: 9; --rows: 11; }
+[data-icon="cup"] { --ic: var(--ab-cup); --cols: 11; --rows: 8; }
+[data-icon="tower"] { --ic: var(--ab-tower); --cols: 11; --rows: 14; }
+[data-icon="compass"] { --ic: var(--ab-compass); --cols: 11; --rows: 11; }
+[data-icon="envelope"] { --ic: var(--ab-envelope); --cols: 17; --rows: 12; }
+[data-icon="seal"] { --ic: var(--ab-seal); --cols: 13; --rows: 13; }
+[data-icon="stamp"] { --ic: var(--ab-stamp); --cols: 15; --rows: 18; }
+[data-icon="postmark"] { --ic: var(--ab-postmark); --cols: 23; --rows: 13; }
+[data-icon="spark"] { --ic: var(--ab-spark); --cols: 7; --rows: 7; }
+
+/* ───────── Dekorasi latar ───────── */
+
+.deco {
   position: absolute;
-  color: var(--gold);
-  opacity: 0.15;
-  font-size: 38px;
-  line-height: 1;
-  user-select: none;
-  animation: ornament-float 7s ease-in-out infinite;
+  opacity: 0.28;
+  animation: about-float 7s steps(6) infinite;
 }
 
-.about-sword {
-  left: 2%;
-  top: 12%;
-  transform: rotate(-20deg);
-}
+.deco-tower { --k: 5; left: 2%; top: 10%; }
+.deco-loupe { --k: 4; right: 5%; top: 22%; animation-delay: -2s; }
+.deco-hammer { --k: 4; right: 3%; bottom: 14%; animation-delay: -4s; }
+.deco-compass { --k: 5; left: 4%; bottom: 7%; animation-delay: -1s; }
+.deco-spark { --k: 4; left: 46%; top: 42%; animation: about-twinkle 3s steps(2, end) infinite; }
 
-.about-rune {
-  right: 4%;
-  top: 24%;
-  font-size: 54px;
-  animation-delay: 800ms;
-}
+/* ───────── Kartu karakter ───────── */
 
-.about-shield {
-  right: 2%;
-  bottom: 18%;
-  font-size: 64px;
-  animation-delay: 1.4s;
-}
-
-.about-sparkle {
-  left: 42%;
-  top: 43%;
-  font-size: 24px;
-  animation: pixel-twinkle 3s steps(2, end) infinite;
-}
-
-.about-potion {
-  left: 3%;
-  bottom: 8%;
-  font-size: 38px;
-  animation-delay: 1s;
-}
-
-/* Portrait frame */
-.portrait-frame {
-  animation: profile-enter 700ms ease-out both;
+.sheet__frame {
+  box-shadow: 6px 6px 0 var(--color-gold-highlight);
 }
 
 .portrait-stage img {
@@ -65,11 +92,7 @@
     linear-gradient(45deg, transparent 75%, rgb(148 113 58 / 8%) 75%),
     linear-gradient(-45deg, transparent 75%, rgb(148 113 58 / 8%) 75%);
   background-size: 16px 16px;
-  background-position:
-    0 0,
-    0 8px,
-    8px -8px,
-    -8px 0;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
 }
 
 .portrait-silhouette {
@@ -77,299 +100,459 @@
   filter: drop-shadow(4px 4px 0 rgb(73 57 39 / 12%));
 }
 
-.portrait-corner,
-.portrait-outer-corner {
+.portrait-corner {
   position: absolute;
   z-index: 5;
-  width: 10px;
-  height: 10px;
-  border: 2px solid #94713a;
-  background: #f4eddf;
-}
-
-.portrait-corner {
   width: 8px;
   height: 8px;
+  border: 2px solid var(--color-accent);
+  background: var(--color-bg);
 }
 
-.portrait-outer-corner {
+.nameplate {
+  z-index: 4;
+  background: linear-gradient(to top, rgb(48 39 31 / 92%), rgb(48 39 31 / 45%) 60%, transparent);
+}
+
+.frame-corner {
+  position: absolute;
+  z-index: 6;
   width: 12px;
   height: 12px;
+  border: 2px solid var(--color-accent);
+  background: var(--color-bg);
 }
 
-/* World map */
-.world-map-frame {
-  animation: map-enter 800ms ease-out both;
+.frame-corner-tl { left: -2px; top: -2px; }
+.frame-corner-tr { right: -2px; top: -2px; }
+.frame-corner-bl { bottom: -2px; left: -2px; }
+.frame-corner-br { bottom: -2px; right: -2px; }
+
+/* bar atribut bersegmen */
+.attr {
+  height: 8px;
+  background: var(--color-accent-soft);
+  box-shadow: 0 0 0 1px rgb(139 106 53 / 40%);
 }
 
-.world-map-canvas {
-  overflow: hidden;
-  background-color: #c9d1b7;
+.attr__fill {
+  display: block;
+  width: var(--v);
+  height: 100%;
+  background: repeating-linear-gradient(90deg, var(--color-burgundy) 0 6px, transparent 6px 8px);
+}
+
+.is-armed .attr__fill {
+  width: 0;
+}
+
+.is-armed .is-in .attr__fill {
+  animation: about-fill 1s steps(10) 0.35s both;
+}
+
+/* ───────── Surat ───────── */
+
+.letter {
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 2px solid var(--color-pixel-shadow);
+  background-color: #fffaf0;
   background-image:
-    linear-gradient(90deg, rgb(73 57 39 / 5%) 1px, transparent 1px),
-    linear-gradient(rgb(73 57 39 / 5%) 1px, transparent 1px);
-  background-size: 16px 16px;
-  isolation: isolate;
+    radial-gradient(ellipse at 8% 0%, rgb(232 221 200 / 55%), transparent 50%),
+    radial-gradient(ellipse at 100% 100%, rgb(232 221 200 / 45%), transparent 45%);
+  box-shadow: 6px 6px 0 var(--color-gold-highlight);
 }
 
-.map-ocean-grid {
-  background-image:
-    linear-gradient(90deg, rgb(79 116 118 / 12%) 1px, transparent 1px),
-    linear-gradient(rgb(79 116 118 / 12%) 1px, transparent 1px);
-  background-size: 16px 16px;
+/* sudut perkamen pixel */
+.letter::before,
+.letter::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--color-accent);
+  background: var(--color-bg);
+}
+
+.letter::before { left: -2px; top: -2px; }
+.letter::after { right: -2px; bottom: -2px; }
+
+.stamps {
+  width: calc(15 * 4px);
+  height: calc(18 * 4px);
+}
+
+.postmark {
+  --k: 3;
+  position: absolute;
+  bottom: -6px;
+  left: -44px;
   opacity: 0.7;
 }
 
-.map-coordinate {
-  position: absolute;
-  z-index: 2;
-  color: #493927;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: 8px;
-  letter-spacing: 0.12em;
-  opacity: 0.5;
-  pointer-events: none;
+.letter__hello {
+  color: var(--color-text);
 }
 
-.map-coordinate-one {
-  left: 4%;
-  top: 9%;
+.postman {
+  color: var(--color-burgundy);
+  box-shadow: inset 0 -0.16em 0 rgb(113 56 64 / 30%);
 }
 
-.map-coordinate-two {
-  right: 5%;
-  bottom: 17%;
+.hl {
+  padding: 0 2px;
+  background: linear-gradient(transparent 58%, rgb(211 184 117 / 60%) 58%);
+  color: var(--color-text);
 }
 
-.map-coordinate-three {
-  left: 49%;
-  top: 68%;
-  transform: rotate(-12deg);
-  opacity: 0.35;
+.seal {
+  filter: drop-shadow(3px 3px 0 rgb(46 38 31 / 25%));
 }
 
-.map-label {
-  position: absolute;
-  z-index: 12;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 6px;
-  border: 1px solid rgb(73 57 39 / 45%);
-  background: rgb(244 237 223 / 88%);
-  color: #493927;
-  font-family: "IBM Plex Mono", monospace;
-  font-size: clamp(6px, 0.8vw, 8px);
-  letter-spacing: 0.05em;
-  pointer-events: none;
-  white-space: nowrap;
+.reply {
+  box-shadow: 4px 4px 0 var(--color-pixel-shadow);
+  transition:
+    transform 0.15s steps(2),
+    box-shadow 0.15s steps(2);
 }
 
-.map-label-dot {
-  width: 5px;
-  height: 5px;
-  flex-shrink: 0;
-  background: #783f46;
-  box-shadow: 2px 2px 0 rgb(73 57 39 / 30%);
+.reply:hover,
+.reply:focus-visible {
+  background: var(--color-burgundy-hover);
+  box-shadow: 6px 6px 0 var(--color-pixel-shadow);
+  transform: translateY(-2px);
 }
 
-.map-label-shire {
-  left: 12%;
-  top: 39%;
+.reply:active {
+  box-shadow: 2px 2px 0 var(--color-pixel-shadow);
+  transform: translateY(2px);
 }
 
-.map-label-codehaven {
-  left: 29%;
-  top: 30%;
+/* paragraf surat muncul satu per satu */
+.is-armed .letter:not(.is-in) .letter__body p {
+  opacity: 0;
 }
 
-.map-label-peaks {
-  left: 44%;
-  top: 42%;
+.is-armed .letter.is-in .letter__body p {
+  animation: about-line 0.5s steps(5) both;
 }
 
-.map-spark {
-  position: absolute;
-  z-index: 15;
-  color: #783f46;
-  font-size: 13px;
-  pointer-events: none;
-  animation: pixel-twinkle 2.5s steps(2, end) infinite;
+.letter__body p:nth-child(1) { animation-delay: 0.25s; }
+.letter__body p:nth-child(2) { animation-delay: 0.45s; }
+.letter__body p:nth-child(3) { animation-delay: 0.65s; }
+.letter__body p:nth-child(4) { animation-delay: 0.85s; }
+
+.is-armed .letter.is-in .seal {
+  animation: about-seal 0.5s steps(5) 1.2s both;
 }
 
-.map-spark-one {
-  left: 24%;
-  top: 25%;
+/* ───────── Inventaris & rute harian ───────── */
+
+.slot {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-surface-raised);
+  box-shadow:
+    inset 3px 3px 0 rgb(255 255 255 / 45%),
+    inset -3px -3px 0 rgb(139 106 53 / 25%);
 }
 
-.map-spark-two {
-  right: 23%;
-  top: 39%;
-  animation-delay: 600ms;
-}
-
-.map-spark-three {
-  right: 13%;
-  bottom: 26%;
-  animation-delay: 1.2s;
-}
-
-.map-route {
-  animation: route-dash 18s linear infinite;
-}
-
-.map-road {
-  animation: route-dash 24s linear infinite reverse;
-}
-
-.map-marker {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: marker-pulse 2.5s steps(2, end) infinite;
-}
-
-.marker-two {
-  animation-delay: 300ms;
-}
-
-.marker-three {
-  animation-delay: 600ms;
-}
-
-.marker-four {
-  animation-delay: 900ms;
-}
-
-/* Principle list */
-.principle-row {
-  transition: background-color 250ms ease;
-}
-
-.principle-row:hover {
-  background-color: rgb(238 227 207 / 55%);
-}
-
-@keyframes ornament-float {
-  0%,
-  100% {
-    translate: 0 0;
-  }
-
-  50% {
-    translate: 0 -9px;
-  }
-}
-
-@keyframes pixel-twinkle {
-  0%,
-  100% {
-    opacity: 0.25;
-  }
-
-  50% {
-    opacity: 0.85;
-  }
-}
-
-@keyframes route-dash {
-  to {
-    stroke-dashoffset: -96;
-  }
-}
-
-@keyframes marker-pulse {
-  0%,
-  100% {
-    opacity: 0.75;
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
-@keyframes profile-enter {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes map-enter {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (max-width: 640px) {
-  .about-sword {
-    left: -12px;
-  }
-
-  .about-rune {
-    right: -10px;
-    font-size: 38px;
-  }
-
-  .about-shield {
-    right: -14px;
-    font-size: 46px;
-  }
-
-  .map-label {
-    padding: 3px 4px;
-    font-size: 6px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .about-decoration,
-  .map-spark,
-  .map-route,
-  .map-road,
-  .map-marker,
-  .portrait-frame,
-  .world-map-frame {
-    animation: none;
-  }
-
-  .principle-row,
-  .principle-row h4 {
-    transition: none;
-  }
-}
-
-
-/* Personal interests */
 .interest-card {
-  padding: 1rem;
-  border: 1px solid rgb(161 132 78 / 28%);
-  background: rgb(251 248 241 / 45%);
-  transition: background-color 250ms ease, transform 250ms ease;
+  padding: 1.25rem;
+  border: 1px solid rgb(161 132 78 / 30%);
+  background: rgb(251 248 241 / 55%);
+  transition:
+    transform 0.2s steps(3),
+    box-shadow 0.2s steps(3),
+    border-color 0.2s steps(3);
 }
 
 .interest-card:hover {
-  background: rgb(238 227 207 / 75%);
+  border-color: var(--color-burgundy);
+  box-shadow: 4px 4px 0 var(--color-gold-highlight);
   transform: translateY(-3px);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .interest-card {
-    transition: none;
+.interest-card:hover .sprite {
+  animation: about-hop 0.4s steps(2) 2;
+}
+
+/* rute: vertikal di mobile, horizontal di desktop */
+.route {
+  position: relative;
+}
+
+.route::before {
+  content: "";
+  position: absolute;
+  top: 32px;
+  bottom: 32px;
+  left: 31px;
+  border-left: 3px dashed var(--color-accent);
+  opacity: 0.5;
+}
+
+.route__step {
+  position: relative;
+  min-height: 64px;
+  padding-left: 88px;
+}
+
+.route__node {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  width: 64px;
+  height: 64px;
+  place-items: center;
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-surface);
+  box-shadow: 3px 3px 0 var(--color-gold-highlight);
+  transition: transform 0.2s steps(3);
+}
+
+.route__step:hover .route__node {
+  transform: translateY(-3px);
+}
+
+@media (min-width: 1024px) {
+  .route::before {
+    top: 31px;
+    right: calc((100% - 64px) / 3 - 32px); /* berhenti di node ketiga */
+    bottom: auto;
+    left: 32px;
+    border-top: 3px dashed var(--color-accent);
+    border-left: 0;
   }
 
-  .interest-card:hover {
+  .route__step {
+    min-height: 0;
+    padding-top: 88px;
+    padding-left: 0;
+  }
+}
+
+/* ───────── Peta ───────── */
+
+.map-frame {
+  box-shadow: 5px 5px 0 var(--color-gold-highlight);
+}
+
+.map-canvas {
+  width: calc(var(--ms) * 112);
+  height: calc(var(--ms) * 64);
+  max-width: 100%;
+  overflow: hidden;
+  background: #6fa3a8;
+}
+
+.map-canvas__cv {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+.pin {
+  position: absolute;
+  z-index: 3;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  transform: translate(-50%, -50%);
+}
+
+.pin__dot {
+  position: relative;
+  display: block;
+  width: 16px;
+  height: 16px;
+  border: 3px solid var(--color-pixel-shadow);
+  background: #f3dfaa;
+  animation: about-pulse 2.5s steps(2, end) infinite;
+}
+
+.pin__dot::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  background: var(--color-burgundy);
+}
+
+.pin__label {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  padding: 3px 6px;
+  border: 1px solid rgb(73 57 39 / 55%);
+  background: rgb(244 237 223 / 94%);
+  color: var(--color-text);
+  font-family: var(--font-code);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  transform: translateX(-50%);
+}
+
+.pin.is-active {
+  z-index: 4;
+}
+
+.pin.is-active .pin__dot {
+  background: #ffd56a;
+  animation: none;
+  transform: scale(1.2);
+}
+
+.pin.is-active .pin__label {
+  border-color: var(--color-pixel-shadow);
+  background: var(--color-pixel-shadow);
+  color: #fff8e9;
+}
+
+.pin:focus-visible {
+  outline: 2px dashed var(--color-pixel-shadow);
+  outline-offset: 6px;
+}
+
+.spark {
+  --k: 3;
+  position: absolute;
+  z-index: 2;
+  pointer-events: none;
+  animation: about-twinkle 2.5s steps(2, end) infinite;
+}
+
+.spark-a { left: 24%; top: 18%; }
+.spark-b { right: 14%; bottom: 26%; animation-delay: 1s; }
+
+.legend-dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--color-pixel-shadow);
+  background: #f3dfaa;
+  box-shadow: inset 0 0 0 2px var(--color-burgundy);
+}
+
+.legend-path {
+  display: inline-block;
+  width: 20px;
+  height: 0;
+  border-top: 3px dashed var(--color-burgundy);
+}
+
+.place {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgb(161 132 78 / 30%);
+  background: rgb(251 248 241 / 55%);
+  cursor: pointer;
+  transition:
+    transform 0.15s steps(2),
+    box-shadow 0.15s steps(2);
+}
+
+.place:hover {
+  transform: translateX(3px);
+}
+
+.place.is-active {
+  border-color: var(--color-burgundy);
+  background: var(--color-accent-soft);
+  box-shadow: 3px 3px 0 var(--color-gold-highlight);
+}
+
+.place:focus-visible {
+  outline: 2px dashed var(--color-pixel-shadow);
+  outline-offset: 3px;
+}
+
+.place-detail {
+  padding: 14px 16px;
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-surface);
+  box-shadow: 4px 4px 0 var(--color-accent-soft);
+}
+
+/* ───────── Animasi ───────── */
+
+@keyframes about-enter {
+  from { opacity: 0; transform: translateY(16px); }
+}
+
+@keyframes about-line {
+  from { opacity: 0; transform: translateY(8px); }
+}
+
+@keyframes about-seal {
+  0% { opacity: 0; transform: scale(2.2); }
+  60% { opacity: 1; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes about-fill {
+  from { width: 0; }
+  to { width: var(--v); }
+}
+
+@keyframes about-float {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+
+@keyframes about-twinkle {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes about-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.12); }
+}
+
+@keyframes about-hop {
+  50% { translate: 0 -4px; }
+}
+
+/* ───────── Responsif & aksesibilitas ───────── */
+
+@media (max-width: 640px) {
+  .deco { --k: 3; }
+  .deco-tower { left: -6px; }
+  .deco-loupe { right: -4px; }
+  .deco-hammer { right: -4px; }
+  .postmark { left: -32px; }
+  .pin__label { font-size: 9px; padding: 2px 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .deco,
+  .spark,
+  .pin__dot,
+  .interest-card,
+  .route__node,
+  .place,
+  .reply,
+  .letter__body p,
+  .seal,
+  .attr__fill,
+  [data-reveal] {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .interest-card:hover,
+  .route__step:hover .route__node,
+  .place:hover,
+  .reply:hover {
     transform: none;
   }
 }

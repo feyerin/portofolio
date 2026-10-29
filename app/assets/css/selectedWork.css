@@ -9,7 +9,7 @@
 }
 
 .work-bg {
-  background-color: color-mix(in srgb, var(--color-surface-raised) 45%, var(--color-bg));
+  background-color: var(--color-bg); /* sama dengan section lain: tidak ada garis pertemuan */
 }
 
 .work-parchment {
@@ -17,6 +17,9 @@
     radial-gradient(ellipse at 15% 20%, #d8c79f 0%, transparent 42%),
     radial-gradient(ellipse at 85% 70%, #e3d2b2 0%, transparent 40%),
     linear-gradient(90deg, transparent 49.8%, #c6b28b 50%, transparent 50.2%);
+  /* memudar di atas & bawah supaya tidak bertabrakan dengan section lain */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
 }
 
 .work-grid {
@@ -24,7 +27,9 @@
     linear-gradient(var(--color-accent) 1px, transparent 1px),
     linear-gradient(90deg, var(--color-accent) 1px, transparent 1px);
   background-size: 24px 24px;
-  mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
+  /* memudar di atas & bawah supaya tidak bertabrakan dengan section lain */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
 }
 
 /* ───────── Muncul saat di-scroll ───────── */

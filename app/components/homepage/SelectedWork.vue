@@ -214,7 +214,6 @@ onBeforeUnmount(() => io?.disconnect());
                         loading="lazy"
                         decoding="async"
                       />
-                      <i class="shot__scan" aria-hidden="true" />
                       <span class="stamp" aria-hidden="true">QUEST CLEARED</span>
                     </div>
                   </div>
