@@ -4,7 +4,7 @@ import AppContainer from "~/components/layout/AppContainer.vue";
 import { renderContactArt } from "~/assets/pixelart/contactArt";
 
 // Ganti dengan informasi profesional kamu.
-const email = "";
+const email = "post.aditia@gmail.com";
 const linkedInUrl = "https://www.linkedin.com/in/aditia-nugraha-postman";
 const githubUrl = "https://github.com/feyerin";
 
