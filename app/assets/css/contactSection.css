@@ -1,0 +1,340 @@
+/* ==========================================================================
+   ContactSection.css — The Final Quest
+   Layout memakai Tailwind di template. Sprite (--ct-*) digambar oleh
+   contactArt.ts. Semua animasi stepped supaya terasa retro.
+   ========================================================================== */
+
+.contact-section {
+  background-color: var(--color-bg); /* sama dengan section lain: tidak ada garis pertemuan */
+}
+
+.contact-parchment {
+  background-image:
+    radial-gradient(ellipse at 10% 30%, #d8c79f 0%, transparent 45%),
+    radial-gradient(ellipse at 92% 78%, #e3d2b2 0%, transparent 42%);
+  /* memudar di atas & bawah supaya tidak bertabrakan dengan section lain */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+
+.contact-grid {
+  background-image:
+    linear-gradient(var(--color-accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-accent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  /* memudar di atas & bawah supaya tidak bertabrakan dengan section lain */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+
+/* ───────── Muncul saat di-scroll ───────── */
+
+.is-armed [data-reveal]:not([data-in]) {
+  opacity: 0;
+}
+
+.is-armed [data-reveal][data-in] {
+  animation: contact-enter 0.7s steps(7) both;
+}
+
+.is-armed [data-reveal]:nth-child(2)[data-in] { animation-delay: 0.12s; }
+.is-armed [data-reveal]:nth-child(3)[data-in] { animation-delay: 0.24s; }
+
+/* ───────── Panel perkamen ───────── */
+
+.quest-frame {
+  padding: 5px;
+  background: var(--color-accent);
+  box-shadow:
+    0 0 0 1px var(--color-accent-hover),
+    0 0 0 7px var(--color-accent-soft),
+    0 0 0 8px #c3aa7d,
+    8px 8px 0 8px rgb(46 38 31 / 12%);
+}
+
+.quest-inner {
+  min-height: 480px;
+  border: 1px solid rgb(148 113 58 / 40%);
+  background:
+    radial-gradient(ellipse at 90% 10%, rgb(193 170 125 / 22%), transparent 38%),
+    linear-gradient(135deg, #fbf8f1, #f4eddf 72%, #eee2c8);
+}
+
+.corner {
+  position: absolute;
+  z-index: 2;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--color-accent);
+  background: var(--color-bg);
+}
+
+.corner-tl { top: 12px; left: 12px; }
+.corner-tr { top: 12px; right: 12px; }
+.corner-bl { bottom: 12px; left: 12px; }
+.corner-br { right: 12px; bottom: 12px; }
+
+/* lingkaran sihir pixel art: 2 frame berganti per langkah (bukan diputar -> tetap tajam) */
+.rune {
+  --rk: 6;
+  position: absolute;
+  width: calc(41 * var(--rk) * 1px);
+  height: calc(41 * var(--rk) * 1px);
+  background: var(--ct-rune) 0 0 / calc(82 * var(--rk) * 1px) 100% no-repeat;
+  image-rendering: pixelated;
+  opacity: 0.55;
+  pointer-events: none;
+  animation: rune-swap 2.4s step-end infinite;
+}
+
+.rune-one { top: -60px; right: -60px; }
+.rune-two { --rk: 5; right: 40px; bottom: -100px; animation-delay: -1.2s; }
+
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--color-success);
+  box-shadow: 0 0 0 3px rgb(82 107 76 / 16%);
+  animation: contact-pulse 2s steps(2, end) infinite;
+}
+
+/* ───────── Tombol & tautan ───────── */
+
+.glyph {
+  --k: 2;
+  display: block;
+  flex-shrink: 0;
+  width: calc(var(--gw) * var(--k) * 1px);
+  height: calc(var(--gh) * var(--k) * 1px);
+  background: currentcolor;
+  image-rendering: pixelated;
+  -webkit-mask: var(--m) center / 100% 100% no-repeat;
+  mask: var(--m) center / 100% 100% no-repeat;
+}
+
+[data-glyph="mail"] { --m: var(--ct-mail); --gw: 11; --gh: 8; }
+[data-glyph="copy"] { --m: var(--ct-copy); --gw: 9; --gh: 8; }
+[data-glyph="check"] { --m: var(--ct-check); --gw: 9; --gh: 6; }
+[data-glyph="arrowUp"] { --m: var(--ct-arrowUp); --gw: 7; --gh: 7; }
+[data-glyph="arrowOut"] { --m: var(--ct-arrowOut); --gw: 7; --gh: 7; }
+
+.pixel-button {
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-burgundy);
+  color: var(--color-surface);
+  box-shadow: 4px 4px 0 var(--color-gold-highlight);
+  transition:
+    transform 0.15s steps(2),
+    box-shadow 0.15s steps(2),
+    background-color 0.15s steps(2);
+}
+
+.pixel-button:hover,
+.pixel-button:focus-visible {
+  background: var(--color-burgundy-hover);
+  box-shadow: 2px 2px 0 var(--color-gold-highlight);
+  transform: translate(2px, 2px);
+}
+
+.pixel-button:active {
+  box-shadow: 0 0 0 var(--color-gold-highlight);
+  transform: translate(4px, 4px);
+}
+
+.pixel-secondary {
+  border: 2px solid var(--color-gold-highlight);
+  background: rgb(251 248 241 / 65%);
+  color: var(--color-stone-ink);
+  box-shadow: 3px 3px 0 var(--color-accent-soft);
+  transition:
+    transform 0.15s steps(2),
+    color 0.15s steps(2),
+    border-color 0.15s steps(2);
+}
+
+.pixel-secondary:hover,
+.pixel-secondary:focus-visible {
+  border-color: var(--color-burgundy);
+  background: var(--color-surface);
+  color: var(--color-burgundy);
+  transform: translateY(-2px);
+}
+
+.pixel-button:focus-visible,
+.pixel-secondary:focus-visible,
+.social-link:focus-visible,
+.back-to-top:focus-visible {
+  outline: 2px dashed var(--color-pixel-shadow);
+  outline-offset: 4px;
+}
+
+.social-link,
+.back-to-top {
+  border: 0;
+  background: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color 0.15s steps(2);
+}
+
+.social-link:hover,
+.back-to-top:hover {
+  color: var(--color-burgundy);
+}
+
+.back-to-top {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+.social-link:hover .glyph,
+.back-to-top:hover .glyph {
+  animation: contact-nudge 0.4s steps(2) infinite;
+}
+
+/* ───────── Gagak pembawa pesan ───────── */
+
+.messenger {
+  position: relative;
+  z-index: 1;
+  padding: 18px 14px;
+  border: 2px solid var(--color-pixel-shadow);
+  background: rgb(251 248 241 / 70%);
+  box-shadow: 4px 4px 0 var(--color-gold-highlight);
+  text-align: center;
+}
+
+.messenger__perch {
+  display: flex;
+  justify-content: center;
+  margin: 12px auto;
+}
+
+.raven {
+  --rk: 5;
+  display: block;
+  width: calc(26 * var(--rk) * 1px);
+  height: calc(22 * var(--rk) * 1px);
+  background: var(--ct-raven) 0 0 / calc(78 * var(--rk) * 1px) 100% no-repeat;
+  image-rendering: pixelated;
+  animation:
+    raven-land 0.5s steps(5) both,
+    raven-idle 6s step-end 0.5s infinite;
+}
+
+/* hover/fokus tombol: gagak mengambil surat */
+.raven.is-ready {
+  background-position-x: calc(-52 * var(--rk) * 1px);
+  animation: raven-bob 0.6s steps(2) infinite;
+}
+
+/* klik tombol: gagak terbang membawa pesan */
+.raven.is-flying {
+  background-position-x: calc(-52 * var(--rk) * 1px);
+  animation:
+    raven-flap 0.3s steps(2) infinite,
+    raven-fly 2.8s steps(28) forwards;
+}
+
+.seal-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  color: var(--color-accent);
+  font-size: 10px;
+}
+
+.seal-divider span:first-child,
+.seal-divider span:last-child {
+  width: 24px;
+  height: 2px;
+  background: rgb(139 106 53 / 35%);
+}
+
+/* ───────── Animasi ───────── */
+
+@keyframes contact-enter {
+  from { opacity: 0; transform: translateY(16px); }
+}
+
+@keyframes contact-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+@keyframes contact-nudge {
+  50% { translate: 2px -2px; }
+}
+
+@keyframes rune-swap {
+  0% { background-position-x: 0; }
+  50% { background-position-x: calc(-41 * var(--rk) * 1px); }
+}
+
+@keyframes raven-land {
+  from { opacity: 0; transform: translateY(-22px); }
+}
+
+/* sesekali mengepakkan sayap */
+@keyframes raven-idle {
+  0%, 86% { background-position-x: 0; }
+  88%, 94% { background-position-x: calc(-26 * var(--rk) * 1px); }
+  96%, 100% { background-position-x: 0; }
+}
+
+@keyframes raven-bob {
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes raven-flap {
+  0% { background-position-x: calc(-26 * var(--rk) * 1px); }
+  50% { background-position-x: 0; }
+}
+
+@keyframes raven-fly {
+  to { opacity: 0; transform: translate(-150px, -230px) scale(0.55); }
+}
+
+/* ───────── Responsif & aksesibilitas ───────── */
+
+@media (max-width: 640px) {
+  .quest-frame {
+    box-shadow:
+      0 0 0 1px var(--color-accent-hover),
+      0 0 0 4px var(--color-accent-soft),
+      0 0 0 5px #c3aa7d,
+      4px 4px 0 5px rgb(46 38 31 / 10%);
+  }
+
+  .quest-inner {
+    min-height: auto;
+  }
+
+  .rune-one { --rk: 5; top: -45px; right: -90px; }
+  .rune-two { --rk: 4; right: -70px; bottom: -80px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rune,
+  .raven,
+  .status-dot,
+  .glyph,
+  [data-reveal] {
+    animation: none !important;
+  }
+
+  .pixel-button,
+  .pixel-secondary,
+  .social-link,
+  .back-to-top {
+    transition: none !important;
+  }
+
+  .pixel-button:hover,
+  .pixel-secondary:hover {
+    transform: none;
+  }
+}

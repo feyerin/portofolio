@@ -9,7 +9,6 @@
   Contoh: bg-paper, text-ink, border-line, text-wine, font-display.
 */
 @theme inline {
-  --color-background: var(--color-bg);
   --color-paper: var(--color-surface);
   --color-paper-raised: var(--color-surface-raised);
   --color-ink: var(--color-text);

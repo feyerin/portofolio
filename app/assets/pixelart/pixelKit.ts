@@ -109,6 +109,20 @@ export function glow(g: Grid, cx: number, cy: number, r: number, color: number, 
     }
 }
 
+/** Isi poligon (even-odd) dengan satu warna. */
+export function poly(g: Grid, pts: [number, number][], color: number): void {
+  for (let y = 0; y < g.h; y++)
+    for (let x = 0; x < g.w; x++) {
+      let inside = false;
+      for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+        const [xi, yi] = pts[i] as [number, number];
+        const [xj, yj] = pts[j] as [number, number];
+        if (yi > y + 0.5 !== yj > y + 0.5 && x + 0.5 < ((xj - xi) * (y + 0.5 - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+      if (inside) g.set(x, y, color);
+    }
+}
+
 /** Salin grid ke <canvas> (ukuran canvas mengikuti grid). */
 export function blit(g: Grid, c: HTMLCanvasElement): void {
   c.width = g.w;
