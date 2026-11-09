@@ -9,7 +9,7 @@ import AppNavbar from '~/components/layout/AppNavbar.vue';
   <div class="flex min-h-screen flex-col">
     <a
       href="#main-content"
-      class="sr-only z-[100] rounded-md bg-accent p-3 text-background focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
+      class="sr-only z-100 rounded-md bg-accent p-3 text-background focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
     >
       Skip to content
     </a>

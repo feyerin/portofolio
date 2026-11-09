@@ -12,7 +12,7 @@ const navigation = [
   { label: "Works", href: "/#work", number: "II", symbol: "⚔" },
   { label: "About", href: "/#about", number: "III", symbol: "♙" },
   { label: "Experience", href: "/#experience", number: "IV", symbol: "♜" },
-  { label: "ATMOS", href: "/lab/atmos", number: "V", symbol: "✧" },
+  { label: "Labs", href: "/labs", number: "V", symbol: "✧" },
   { label: "Contact", href: "/#contact", number: "VI", symbol: "✉" },
 ];
 

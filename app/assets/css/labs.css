@@ -1,0 +1,503 @@
+/* ==========================================================================
+   labs.css — The Alchemist's Workshop (halaman Labs + Raven Mail Run)
+   Layout memakai Tailwind di template. Sprite (--bt-*, --lg-*, --rm-*) digambar
+   oleh labsArt.ts / ravenMailGame.ts. Animasi dekoratif stepped (retro).
+   ========================================================================== */
+
+.labs-theme {
+  position: relative;
+  isolation: isolate;
+  overflow-x: clip;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.labs-parchment {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image:
+    radial-gradient(ellipse at 12% 10%, #d8c79f 0%, transparent 40%),
+    radial-gradient(ellipse at 90% 50%, #e3d2b2 0%, transparent 38%),
+    radial-gradient(ellipse at 15% 92%, #e3d2b2 0%, transparent 38%);
+}
+
+.labs-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.13;
+  background-image:
+    linear-gradient(var(--color-accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-accent) 1px, transparent 1px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+/* ───────── Muncul saat di-scroll (atribut data-*, aman dari :class Vue) ───────── */
+
+[data-armed] [data-reveal]:not([data-in]) {
+  opacity: 0;
+}
+
+[data-armed] [data-reveal][data-in] {
+  animation: labs-enter 0.7s steps(7) var(--lab-delay, 0ms) both;
+}
+
+/* ───────── Ikon panah & elemen umum ───────── */
+
+.glyph {
+  --k: 2;
+  display: block;
+  flex-shrink: 0;
+  width: calc(7 * var(--k) * 1px);
+  height: calc(7 * var(--k) * 1px);
+  background: currentcolor;
+  image-rendering: pixelated;
+  -webkit-mask: var(--m) center / 100% 100% no-repeat;
+  mask: var(--m) center / 100% 100% no-repeat;
+}
+
+[data-glyph="arrowLeft"] { --m: var(--lg-arrowLeft); }
+[data-glyph="arrowRight"] { --m: var(--lg-arrowRight); }
+
+.labs-brand__mark {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-surface);
+  color: var(--color-burgundy);
+  box-shadow: 3px 3px 0 var(--color-gold-highlight);
+  transition:
+    transform 0.15s steps(2),
+    box-shadow 0.15s steps(2);
+}
+
+.labs-brand:hover .labs-brand__mark,
+.labs-brand:focus-visible .labs-brand__mark {
+  box-shadow: 1px 1px 0 var(--color-gold-highlight);
+  transform: translate(2px, 2px);
+}
+
+.labs-brand:focus-visible,
+.labs-button:focus-visible,
+.lab-card:focus-visible {
+  outline: 2px dashed var(--color-pixel-shadow);
+  outline-offset: 4px;
+}
+
+.labs-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--color-success);
+  box-shadow: 0 0 0 3px rgb(82 107 76 / 16%);
+  animation: labs-pulse 2s steps(2, end) infinite;
+}
+
+.labs-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-surface);
+  box-shadow: 3px 3px 0 var(--color-gold-highlight);
+  color: var(--color-copper);
+  font-family: var(--font-code);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.labs-panel {
+  border: 2px solid var(--color-pixel-shadow);
+  background: rgb(255 253 248 / 92%);
+  box-shadow: 4px 4px 0 var(--color-gold-highlight);
+}
+
+.labs-button {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px;
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-burgundy);
+  box-shadow: 3px 3px 0 var(--color-gold-highlight);
+  color: var(--color-surface);
+  cursor: pointer;
+  font-family: var(--font-code);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  transition:
+    transform 0.15s steps(2),
+    box-shadow 0.15s steps(2),
+    background-color 0.15s steps(2);
+}
+
+.labs-button:hover,
+.labs-button:focus-visible {
+  background: var(--color-burgundy-hover);
+  box-shadow: 1px 1px 0 var(--color-gold-highlight);
+  transform: translate(2px, 2px);
+}
+
+.key {
+  display: inline-block;
+  min-width: 24px;
+  padding: 0 6px;
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-surface);
+  box-shadow: 2px 2px 0 var(--color-gold-highlight);
+  color: var(--color-text);
+  font-family: var(--font-code);
+  font-size: 11px;
+  line-height: 20px;
+  text-align: center;
+}
+
+/* ───────── Rak ramuan (hub Labs) ───────── */
+
+.lab-card {
+  position: relative;
+  display: block;
+  height: 100%;
+  padding: 18px 18px 20px;
+  border: 2px solid var(--color-pixel-shadow);
+  background: rgb(255 253 248 / 92%);
+  box-shadow: 5px 5px 0 var(--color-gold-highlight);
+  color: inherit;
+  transition:
+    transform 0.2s steps(3),
+    box-shadow 0.2s steps(3);
+}
+
+.lab-card:not([aria-disabled]):hover {
+  box-shadow: 8px 8px 0 var(--color-gold-highlight);
+  transform: translateY(-4px);
+}
+
+.lab-card--new {
+  box-shadow: 5px 5px 0 var(--color-burgundy);
+}
+
+.lab-card--new:hover {
+  box-shadow: 8px 8px 0 var(--color-burgundy) !important;
+}
+
+.lab-card[aria-disabled] {
+  cursor: default;
+}
+
+.lab-card--soon,
+.lab-card--brewing {
+  background: rgb(255 253 248 / 70%);
+  box-shadow: 4px 4px 0 var(--color-accent-soft);
+}
+
+.lab-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 1px solid rgb(139 106 53 / 45%);
+  background: var(--color-surface-raised);
+  color: var(--color-copper);
+  font-family: var(--font-code);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.lab-status__dot {
+  width: 7px;
+  height: 7px;
+  background: currentcolor;
+}
+
+.lab-status--stable { color: var(--color-success); }
+.lab-status--new { border-color: rgb(113 56 64 / 50%); background: var(--color-burgundy-soft); color: var(--color-burgundy); }
+.lab-status--new .lab-status__dot { animation: labs-pulse 1.6s steps(2, end) infinite; }
+.lab-status--brewing { color: var(--color-copper); }
+.lab-status--soon { color: var(--color-stone-ink); }
+
+.lab-card__cta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 2px dashed rgb(139 106 53 / 40%);
+  color: var(--color-burgundy);
+  font-family: var(--font-code);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.lab-card[aria-disabled] .lab-card__cta {
+  color: var(--color-stone-ink);
+}
+
+.lab-card:not([aria-disabled]):hover .lab-card__cta .glyph {
+  animation: labs-nudge 0.4s steps(2) infinite;
+}
+
+/* botol di atas papan rak kayu */
+.bottle-stage {
+  position: relative;
+  display: flex;
+  height: 132px;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: 14px;
+  padding-bottom: 12px;
+}
+
+.bottle-stage::after {
+  position: absolute;
+  right: -6px;
+  bottom: 0;
+  left: -6px;
+  height: 12px;
+  border-top: 2px solid #8f6c47;
+  background: repeating-linear-gradient(90deg, #6f5238 0 24px, #5f4530 24px 26px);
+  box-shadow: 0 3px 0 rgb(46 38 31 / 25%);
+  content: "";
+}
+
+.bottle {
+  --bk: 6;
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: calc(var(--bw) * var(--bk) * 1px);
+  height: calc(var(--bh) * var(--bk) * 1px);
+  background: var(--ic) center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+  filter: drop-shadow(3px 3px 0 rgb(46 38 31 / 20%));
+}
+
+[data-bottle^="potion"] { --bw: 11; --bh: 14; }
+[data-bottle^="flask"] { --bw: 13; --bh: 13; }
+[data-bottle="potion-wine"] { --ic: var(--bt-potion-wine); }
+[data-bottle="potion-green"] { --ic: var(--bt-potion-green); }
+[data-bottle="flask-blue"] { --ic: var(--bt-flask-blue); }
+[data-bottle="flask-gold"] { --ic: var(--bt-flask-gold); }
+
+.lab-card--soon .bottle {
+  filter: saturate(0.5) drop-shadow(3px 3px 0 rgb(46 38 31 / 15%));
+}
+
+.lab-card:not([aria-disabled]):hover .bottle {
+  animation: labs-hop 0.5s steps(3) infinite;
+}
+
+.bubble {
+  position: absolute;
+  z-index: 2;
+  bottom: 58px;
+  width: 5px;
+  height: 5px;
+  border: 1px solid rgb(46 38 31 / 45%);
+  background: rgb(255 255 255 / 85%);
+  opacity: 0;
+  animation: labs-bubble 2.8s steps(8) infinite;
+}
+
+.bubble-a { left: calc(50% - 6px); }
+.bubble-b { left: calc(50% + 6px); animation-delay: -1s; }
+.bubble-c { left: calc(50% - 16px); animation-delay: -1.9s; }
+
+/* ───────── Game ───────── */
+
+.game-frame {
+  padding: 5px;
+  background: var(--color-accent);
+  box-shadow:
+    0 0 0 1px var(--color-accent-hover),
+    0 0 0 6px var(--color-accent-soft),
+    0 0 0 7px #c3aa7d,
+    7px 7px 0 7px rgb(46 38 31 / 12%);
+}
+
+.game-frame__inner {
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-pixel-shadow);
+}
+
+.game-stage {
+  --gs: 4px;
+  --gw: 160;
+  --gh: 96;
+  position: relative;
+  width: calc(var(--gw) * var(--gs));
+  height: calc(var(--gh) * var(--gs));
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.game-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+}
+
+.hud {
+  position: absolute;
+  top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 10px;
+  border: 1px solid rgb(46 38 31 / 55%);
+  background: rgb(255 253 248 / 90%);
+  color: var(--color-text);
+  font-family: var(--font-code);
+  pointer-events: none;
+}
+
+.hud--left { left: 10px; }
+.hud--right { right: 10px; }
+
+.hud__icon {
+  display: block;
+  width: 18px;
+  height: 14px;
+  background: var(--rm-envelope) center / 100% 100% no-repeat;
+  image-rendering: pixelated;
+}
+
+.hud__label {
+  color: var(--color-copper);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+
+.hud__value {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.game-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(46 38 31 / 30%);
+}
+
+.game-overlay--ready {
+  align-items: end;
+  padding-bottom: 14%;
+  background: none;
+  pointer-events: none;
+}
+
+.game-hint {
+  margin: 0;
+  padding: 8px 14px;
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-surface);
+  box-shadow: 3px 3px 0 var(--color-gold-highlight);
+  color: var(--color-copper);
+  font-family: var(--font-code);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  animation: labs-blink 1.2s steps(1) infinite;
+}
+
+.game-hint__key {
+  display: inline-block;
+  margin-right: 4px;
+  padding: 0 6px;
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-surface-raised);
+  color: var(--color-text);
+}
+
+.game-dialog {
+  max-width: 86%;
+  padding: 22px 28px;
+  border: 2px solid var(--color-pixel-shadow);
+  background: var(--color-surface);
+  box-shadow: 5px 5px 0 var(--color-gold-highlight);
+  text-align: center;
+}
+
+/* ───────── Animasi (stepped) ───────── */
+
+@keyframes labs-enter {
+  from { opacity: 0; transform: translateY(14px); }
+}
+
+@keyframes labs-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+@keyframes labs-blink {
+  0%, 62% { opacity: 1; }
+  63%, 100% { opacity: 0.2; }
+}
+
+@keyframes labs-nudge {
+  50% { translate: 2px 0; }
+}
+
+@keyframes labs-hop {
+  50% { translate: 0 -6px; }
+}
+
+@keyframes labs-bubble {
+  0% { opacity: 0; transform: translateY(0); }
+  15% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-46px); }
+}
+
+/* ───────── Responsif & aksesibilitas ───────── */
+
+@media (max-width: 640px) {
+  .game-dialog {
+    padding: 14px 16px;
+  }
+
+  .hud {
+    top: 6px;
+    padding: 3px 8px;
+  }
+
+  .hud--left { left: 6px; }
+  .hud--right { right: 6px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .labs-dot,
+  .lab-status--new .lab-status__dot,
+  .bubble,
+  .game-hint,
+  .lab-card .bottle,
+  .lab-card__cta .glyph,
+  [data-reveal] {
+    animation: none !important;
+  }
+
+  .lab-card,
+  .labs-button,
+  .labs-brand__mark {
+    transition: none !important;
+  }
+
+  .lab-card:hover {
+    transform: none !important;
+  }
+}
